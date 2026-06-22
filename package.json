@@ -1,0 +1,19 @@
+{
+  "name": "xpt-store",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend",
+    "cdk"
+  ],
+  "scripts": {
+    "dev:frontend": "npm run dev --workspace=frontend",
+    "dev:backend": "npm run dev --workspace=backend",
+    "build:frontend": "npm run build --workspace=frontend",
+    "build:backend": "npm run build --workspace=backend",
+    "build:all": "npm run build:backend && npm run build:frontend",
+    "cdk": "npm run cdk --workspace=cdk",
+    "deploy": "npm run cdk -- deploy --all"
+  }
+}

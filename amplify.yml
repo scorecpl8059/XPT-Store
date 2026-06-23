@@ -6,6 +6,7 @@ applications:
         preBuild:
           commands:
             - npm install
+            - npm install @parcel/watcher @parcel/watcher-linux-x64-glibc --no-save
         build:
           commands:
             - npx next build

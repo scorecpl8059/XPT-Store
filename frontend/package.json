@@ -19,6 +19,7 @@
     "@aws-sdk/s3-request-presigner": "^3.1073.0",
     "@base-ui/react": "^1.6.0",
     "@opensearch-project/opensearch": "^3.6.0",
+    "@parcel/watcher": "^2.5.6",
     "@react-pdf/renderer": "^4.5.1",
     "@stripe/react-stripe-js": "^6.6.0",
     "@stripe/stripe-js": "^9.8.0",
@@ -61,5 +62,8 @@
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^4.1.9"
+  },
+  "optionalDependencies": {
+    "@parcel/watcher-linux-x64-glibc": "^2.5.6"
   }
 }

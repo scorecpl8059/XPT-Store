@@ -5,8 +5,8 @@ applications:
       phases:
         preBuild:
           commands:
-            - rm -f package-lock.json
-            - npm install
+            - rm -rf node_modules package-lock.json
+            - npm install --force
         build:
           commands:
             - npx next build

@@ -6,7 +6,7 @@ applications:
         preBuild:
           commands:
             - rm -rf node_modules package-lock.json
-            - npm install --force
+            - npm install --force --include=optional --cpu=x64 --os=linux
         build:
           commands:
             - npx next build

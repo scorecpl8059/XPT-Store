@@ -24,6 +24,7 @@ export class ApiStack extends cdk.Stack {
 
     // Shared Lambda execution role (reduces IAM resource count from 150+ to 1)
     const lambdaRole = new iam.Role(this, "LambdaRole", {
+      roleName: "xpt-store-lambda-execution",
       assumedBy: new iam.ServicePrincipal("lambda.amazonaws.com"),
       managedPolicies: [
         iam.ManagedPolicy.fromAwsManagedPolicyName("service-role/AWSLambdaBasicExecutionRole"),
@@ -51,7 +52,10 @@ export class ApiStack extends cdk.Stack {
 
     // Helper — creates a function sharing the role and code asset
     const fn = (name: string, handler: string, extraEnv?: Record<string, string>): lambda.Function => {
+      // Convert PascalCase construct ID to kebab-case function name
+      const kebab = name.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
       return new lambda.Function(this, name, {
+        functionName: `xpt-store-${kebab}`,
         runtime: lambda.Runtime.NODEJS_20_X,
         handler,
         code,

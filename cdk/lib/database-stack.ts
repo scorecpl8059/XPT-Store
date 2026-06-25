@@ -12,7 +12,7 @@ export class DatabaseStack extends cdk.Stack {
 
     // 1. store_users
     this.tables.users = new dynamodb.Table(this, "UsersTable", {
-      tableName: "store_users",
+      tableName: "xpt_store_users",
       partitionKey: { name: "userId", type: dynamodb.AttributeType.STRING },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       removalPolicy: cdk.RemovalPolicy.RETAIN,
@@ -37,7 +37,7 @@ export class DatabaseStack extends cdk.Stack {
 
     // 2. store_sessions
     this.tables.sessions = new dynamodb.Table(this, "SessionsTable", {
-      tableName: "store_sessions",
+      tableName: "xpt_store_sessions",
       partitionKey: { name: "sessionToken", type: dynamodb.AttributeType.STRING },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
@@ -49,7 +49,7 @@ export class DatabaseStack extends cdk.Stack {
 
     // 4. store_verification_tokens (NextAuth)
     this.tables.verificationTokens = new dynamodb.Table(this, "VerificationTokensTable", {
-      tableName: "store_verification_tokens",
+      tableName: "xpt_store_verification_tokens",
       partitionKey: { name: "identifier", type: dynamodb.AttributeType.STRING },
       sortKey: { name: "token", type: dynamodb.AttributeType.STRING },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
@@ -58,7 +58,7 @@ export class DatabaseStack extends cdk.Stack {
 
     // 5. store_addresses
     this.tables.addresses = new dynamodb.Table(this, "AddressesTable", {
-      tableName: "store_addresses",
+      tableName: "xpt_store_addresses",
       partitionKey: { name: "userId", type: dynamodb.AttributeType.STRING },
       sortKey: { name: "addressId", type: dynamodb.AttributeType.STRING },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
@@ -67,7 +67,7 @@ export class DatabaseStack extends cdk.Stack {
 
     // 6. store_categories
     this.tables.categories = new dynamodb.Table(this, "CategoriesTable", {
-      tableName: "store_categories",
+      tableName: "xpt_store_categories",
       partitionKey: { name: "categoryId", type: dynamodb.AttributeType.STRING },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       removalPolicy: cdk.RemovalPolicy.RETAIN,
@@ -84,7 +84,7 @@ export class DatabaseStack extends cdk.Stack {
 
     // 7. store_products
     this.tables.products = new dynamodb.Table(this, "ProductsTable", {
-      tableName: "store_products",
+      tableName: "xpt_store_products",
       partitionKey: { name: "productId", type: dynamodb.AttributeType.STRING },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       removalPolicy: cdk.RemovalPolicy.RETAIN,
@@ -106,7 +106,7 @@ export class DatabaseStack extends cdk.Stack {
 
     // 8. store_variants
     this.tables.variants = new dynamodb.Table(this, "VariantsTable", {
-      tableName: "store_variants",
+      tableName: "xpt_store_variants",
       partitionKey: { name: "productId", type: dynamodb.AttributeType.STRING },
       sortKey: { name: "variantId", type: dynamodb.AttributeType.STRING },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
@@ -119,7 +119,7 @@ export class DatabaseStack extends cdk.Stack {
 
     // 9. store_inventory_logs
     this.tables.inventoryLogs = new dynamodb.Table(this, "InventoryLogsTable", {
-      tableName: "store_inventory_logs",
+      tableName: "xpt_store_inventory_logs",
       partitionKey: { name: "productVariantKey", type: dynamodb.AttributeType.STRING },
       sortKey: { name: "timestamp", type: dynamodb.AttributeType.STRING },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
@@ -128,7 +128,7 @@ export class DatabaseStack extends cdk.Stack {
 
     // 10. store_cart
     this.tables.cart = new dynamodb.Table(this, "CartTable", {
-      tableName: "store_cart",
+      tableName: "xpt_store_cart",
       partitionKey: { name: "userId", type: dynamodb.AttributeType.STRING },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
@@ -136,7 +136,7 @@ export class DatabaseStack extends cdk.Stack {
 
     // 11. store_orders
     this.tables.orders = new dynamodb.Table(this, "OrdersTable", {
-      tableName: "store_orders",
+      tableName: "xpt_store_orders",
       partitionKey: { name: "orderId", type: dynamodb.AttributeType.STRING },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       removalPolicy: cdk.RemovalPolicy.RETAIN,
@@ -158,7 +158,7 @@ export class DatabaseStack extends cdk.Stack {
 
     // 12. store_reviews
     this.tables.reviews = new dynamodb.Table(this, "ReviewsTable", {
-      tableName: "store_reviews",
+      tableName: "xpt_store_reviews",
       partitionKey: { name: "productId", type: dynamodb.AttributeType.STRING },
       sortKey: { name: "reviewId", type: dynamodb.AttributeType.STRING },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
@@ -177,7 +177,7 @@ export class DatabaseStack extends cdk.Stack {
 
     // 13. store_wishlists
     this.tables.wishlists = new dynamodb.Table(this, "WishlistsTable", {
-      tableName: "store_wishlists",
+      tableName: "xpt_store_wishlists",
       partitionKey: { name: "userId", type: dynamodb.AttributeType.STRING },
       sortKey: { name: "productId", type: dynamodb.AttributeType.STRING },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
@@ -186,7 +186,7 @@ export class DatabaseStack extends cdk.Stack {
 
     // 14. store_returns
     this.tables.returns = new dynamodb.Table(this, "ReturnsTable", {
-      tableName: "store_returns",
+      tableName: "xpt_store_returns",
       partitionKey: { name: "returnId", type: dynamodb.AttributeType.STRING },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       removalPolicy: cdk.RemovalPolicy.RETAIN,
@@ -208,7 +208,7 @@ export class DatabaseStack extends cdk.Stack {
 
     // 15. store_shipping_zones
     this.tables.shippingZones = new dynamodb.Table(this, "ShippingZonesTable", {
-      tableName: "store_shipping_zones",
+      tableName: "xpt_store_shipping_zones",
       partitionKey: { name: "zoneId", type: dynamodb.AttributeType.STRING },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       removalPolicy: cdk.RemovalPolicy.RETAIN,
@@ -216,7 +216,7 @@ export class DatabaseStack extends cdk.Stack {
 
     // 16. store_rfq
     this.tables.rfq = new dynamodb.Table(this, "RfqTable", {
-      tableName: "store_rfq",
+      tableName: "xpt_store_rfq",
       partitionKey: { name: "rfqId", type: dynamodb.AttributeType.STRING },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       removalPolicy: cdk.RemovalPolicy.RETAIN,
@@ -234,7 +234,7 @@ export class DatabaseStack extends cdk.Stack {
 
     // 17. store_pages
     this.tables.pages = new dynamodb.Table(this, "PagesTable", {
-      tableName: "store_pages",
+      tableName: "xpt_store_pages",
       partitionKey: { name: "pageId", type: dynamodb.AttributeType.STRING },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       removalPolicy: cdk.RemovalPolicy.RETAIN,
@@ -251,7 +251,7 @@ export class DatabaseStack extends cdk.Stack {
 
     // 18. store_settings
     this.tables.settings = new dynamodb.Table(this, "SettingsTable", {
-      tableName: "store_settings",
+      tableName: "xpt_store_settings",
       partitionKey: { name: "settingKey", type: dynamodb.AttributeType.STRING },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       removalPolicy: cdk.RemovalPolicy.RETAIN,
@@ -259,7 +259,7 @@ export class DatabaseStack extends cdk.Stack {
 
     // 19. store_search_logs
     this.tables.searchLogs = new dynamodb.Table(this, "SearchLogsTable", {
-      tableName: "store_search_logs",
+      tableName: "xpt_store_search_logs",
       partitionKey: { name: "date", type: dynamodb.AttributeType.STRING },
       sortKey: { name: "timestampSearchId", type: dynamodb.AttributeType.STRING },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
@@ -268,7 +268,7 @@ export class DatabaseStack extends cdk.Stack {
 
     // 20. store_audit_logs (admin action audit trail)
     this.tables.auditLogs = new dynamodb.Table(this, "AuditLogsTable", {
-      tableName: "store_audit_logs",
+      tableName: "xpt_store_audit_logs",
       partitionKey: { name: "entityType", type: dynamodb.AttributeType.STRING },
       sortKey: { name: "timestampLogId", type: dynamodb.AttributeType.STRING },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,

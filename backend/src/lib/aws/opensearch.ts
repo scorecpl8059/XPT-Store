@@ -15,7 +15,7 @@ function getClient(): Client {
   return client;
 }
 
-const INDEX_NAME = "store_products";
+const INDEX_NAME = "xpt_store_products";
 
 export async function ensureIndex(): Promise<void> {
   const os = getClient();

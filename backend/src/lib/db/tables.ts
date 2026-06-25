@@ -1,4 +1,4 @@
-const PREFIX = "store_";
+const PREFIX = "xpt_store_";
 
 export const Tables = {
   USERS: `${PREFIX}users`,

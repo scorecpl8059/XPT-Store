@@ -5,6 +5,7 @@ import { DatabaseStack } from "../lib/database-stack";
 import { StorageStack } from "../lib/storage-stack";
 import { SecurityStack } from "../lib/security-stack";
 import { ApiStack } from "../lib/api-stack";
+import { FrontendStack } from "../lib/frontend-stack";
 
 const app = new cdk.App();
 
@@ -25,3 +26,5 @@ new ApiStack(app, "XptStore-Api", {
   bucket: storage.bucket,
   distribution: storage.distribution,
 });
+
+new FrontendStack(app, "XptStore-Frontend", { env });

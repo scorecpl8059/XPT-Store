@@ -5,9 +5,12 @@ applications:
       phases:
         preBuild:
           commands:
+            - node --version
             - rm -rf node_modules package-lock.json
             - npm install --force --include=optional
-            - npm rebuild
+            - npm ls @swc/core || true
+            - ls node_modules/@swc/ || true
+            - ls node_modules/next-intl/node_modules/@swc/ 2>/dev/null || echo "no nested @swc"
         build:
           commands:
             - npx next build

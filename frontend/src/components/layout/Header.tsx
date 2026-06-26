@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { ShoppingCart, User, Search, Menu, Heart, LogOut, X } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -18,6 +18,7 @@ export function Header() {
   const [cartOpen, setCartOpen] = useState(false);
   const { user, logout } = useAuth();
   const { itemCount } = useCart();
+  const locale = useLocale();
   const t = useTranslations("nav");
 
   const navLinks = [
@@ -34,6 +35,11 @@ export function Header() {
           <div className="flex h-14 items-center justify-between gap-4">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 shrink-0">
+              <img
+                src="https://xpt-tech-assets.s3.us-east-1.amazonaws.com/xpt-logo.png"
+                alt="XPT-TECH"
+                className="h-8 w-auto"
+              />
               <span className="text-lg font-bold tracking-tight text-ws-brand">
                 XPT-TECH
               </span>
@@ -99,7 +105,10 @@ export function Header() {
                     <span className="max-w-[100px] truncate">{user.name}</span>
                   </Link>
                   <button
-                    onClick={logout}
+                    onClick={() => {
+                      logout();
+                      window.location.href = `/${locale}/`;
+                    }}
                     className="p-2 text-ws-text-secondary hover:text-ws-red transition-colors rounded-md"
                     title={t("signOut")}
                   >

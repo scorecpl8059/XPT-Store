@@ -10,12 +10,12 @@ export async function handler(
     const user = getAuthUser(event);
     const isAdmin = user?.role === "admin";
 
-    const slug = event.pathParameters?.slug;
-    if (!slug) {
-      return badRequest("Slug is required");
+    const id = event.pathParameters?.id;
+    if (!id) {
+      return badRequest("Page ID or slug is required");
     }
 
-    const page = await getPageBySlug(slug);
+    const page = await getPageBySlug(id);
     if (!page) {
       return notFound("Page not found");
     }

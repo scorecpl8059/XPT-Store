@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
+import { useRouter } from "@/i18n/navigation";
 import { Link } from "@/i18n/navigation";
 import { useAuth } from "@/hooks/use-auth";
 import { WsButton } from "@/components/ui/cyber-button";
@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/cyber-card";
 
 export default function LoginPage() {
+  const locale = useLocale();
   const router = useRouter();
   const { login } = useAuth();
   const t = useTranslations("auth");
@@ -29,7 +30,7 @@ export default function LoginPage() {
 
     try {
       await login(email, password);
-      router.push("/");
+      window.location.href = `/${locale}/`;
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");
     } finally {

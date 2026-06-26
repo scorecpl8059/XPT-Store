@@ -56,7 +56,7 @@ export default function StaticPage() {
             <>
               <h1 className="text-2xl font-bold text-ws-text mb-6">{page.title}</h1>
               <div
-                className="prose prose-sm max-w-none text-ws-text-secondary"
+                className="max-w-none text-ws-text-secondary text-sm leading-relaxed [&>h2]:text-base [&>h2]:font-bold [&>h2]:text-ws-text [&>h2]:mt-8 [&>h2]:mb-3 [&>h2:first-child]:mt-0 [&>p]:mb-4 [&>ul]:mb-4 [&>ol]:mb-4 [&>ul]:list-disc [&>ul]:pl-6 [&>ol]:list-decimal [&>ol]:pl-6 [&>ul>li]:mb-2 [&>ol>li]:mb-2 [&_a]:text-ws-blue [&_a]:underline [&_a:hover]:text-ws-blue-hover [&_strong]:font-semibold [&_strong]:text-ws-text"
                 dangerouslySetInnerHTML={{ __html: page.content }}
               />
               <p className="text-xs text-ws-text-muted mt-8 border-t border-ws-border pt-4">

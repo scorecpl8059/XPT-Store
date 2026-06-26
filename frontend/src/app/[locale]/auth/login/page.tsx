@@ -29,8 +29,8 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      await login(email, password);
-      window.location.href = `/${locale}/`;
+      const user = await login(email, password);
+      window.location.href = user.role === "admin" ? "/admin/" : `/${locale}/`;
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");
     } finally {

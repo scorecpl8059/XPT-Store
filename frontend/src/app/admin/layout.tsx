@@ -99,7 +99,7 @@ export default function AdminLayout({
                 </p>
               </div>
               <button
-                onClick={logout}
+                onClick={() => { logout(); window.location.href = "/en/"; }}
                 className="p-1.5 text-ws-text-muted hover:text-ws-red transition-colors rounded"
                 title="Sign out"
               >

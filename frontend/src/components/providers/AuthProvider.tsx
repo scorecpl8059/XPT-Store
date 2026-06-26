@@ -37,6 +37,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem("accessToken", res.accessToken);
     localStorage.setItem("refreshToken", res.refreshToken);
     setUser(res.user);
+    return res.user;
   }, []);
 
   const register = useCallback(async (data: RegisterData) => {

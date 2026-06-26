@@ -97,6 +97,14 @@ export function Header() {
 
               {user ? (
                 <div className="hidden sm:flex items-center gap-1">
+                  {user.role === "admin" && (
+                    <a
+                      href="/admin/"
+                      className="px-3 py-2 text-sm font-medium text-ws-blue hover:text-ws-blue-hover transition-colors rounded-md hover:bg-ws-surface"
+                    >
+                      Admin
+                    </a>
+                  )}
                   <Link
                     href="/account"
                     className="flex items-center gap-2 px-3 py-2 text-sm text-ws-text-secondary hover:text-ws-text transition-colors rounded-md hover:bg-ws-surface"

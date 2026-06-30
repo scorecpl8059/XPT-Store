@@ -1,6 +1,7 @@
 import type { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { requireAdmin, AuthError } from "../../lib/auth/middleware";
 import { getVariantsByProduct, updateStock } from "../../lib/db/variants";
+import { getProductById, updateProductStock } from "../../lib/db/products";
 import { logInventoryChange } from "../../lib/db/inventory";
 import { success, badRequest, notFound, unauthorized, forbidden, serverError, initCors } from "../../lib/utils/response";
 
@@ -15,19 +16,20 @@ export async function handler(
       return badRequest("Request body is required");
     }
 
-    const { productId, variantId, adjustment, reason } = JSON.parse(event.body);
-
+    const productId = event.pathParameters?.productId;
     if (!productId) {
       return badRequest("productId is required");
     }
+
+    const { variantId, adjustment, reason } = JSON.parse(event.body);
 
     if (typeof adjustment !== "number" || adjustment === 0) {
       return badRequest("adjustment must be a non-zero number");
     }
 
-    const variants = await getVariantsByProduct(productId);
-
+    // If a specific variant is targeted, update that variant
     if (variantId) {
+      const variants = await getVariantsByProduct(productId);
       const variant = variants.find((v) => v.variantId === variantId);
       if (!variant) {
         return notFound("Variant not found");
@@ -53,21 +55,47 @@ export async function handler(
       return success({ stock: updated.stock });
     }
 
-    // If no variantId, update the first variant (or return error if none)
-    if (variants.length === 0) {
-      return notFound("No variants found for this product");
+    // No variantId — check if product has variants
+    const variants = await getVariantsByProduct(productId);
+
+    if (variants.length > 0) {
+      // Has variants: update the first one
+      const firstVariant = variants[0];
+      const previousStock = firstVariant.stock;
+      const updated = await updateStock(productId, firstVariant.variantId, adjustment);
+
+      if (!updated) {
+        return badRequest("Stock update failed — resulting stock would be negative");
+      }
+
+      await logInventoryChange({
+        productVariantKey: `${productId}#${firstVariant.variantId}`,
+        type: "adjustment",
+        quantityChange: adjustment,
+        previousStock,
+        newStock: updated.stock,
+        reason,
+        userId: user.userId,
+      });
+
+      return success({ stock: updated.stock });
     }
 
-    const firstVariant = variants[0];
-    const previousStock = firstVariant.stock;
-    const updated = await updateStock(productId, firstVariant.variantId, adjustment);
+    // No variants: update stock directly on the product
+    const product = await getProductById(productId);
+    if (!product) {
+      return notFound("Product not found");
+    }
+
+    const previousStock = product.stock ?? 0;
+    const updated = await updateProductStock(productId, adjustment);
 
     if (!updated) {
       return badRequest("Stock update failed — resulting stock would be negative");
     }
 
     await logInventoryChange({
-      productVariantKey: `${productId}#${firstVariant.variantId}`,
+      productVariantKey: productId,
       type: "adjustment",
       quantityChange: adjustment,
       previousStock,

@@ -50,16 +50,15 @@ export default function AdminInventoryPage() {
     if (adj === 0) return;
 
     try {
-      await api.put("/inventory/stock", {
-        productId,
+      await api.put(`/inventory/${productId}/stock`, {
         variantId,
         adjustment: adj,
         reason: "Manual adjustment",
       });
       setAdjustments((prev) => ({ ...prev, [key]: "" }));
       await fetchInventory();
-    } catch {
-      // handle error
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Stock update failed");
     }
   };
 
@@ -139,6 +138,7 @@ export default function AdminInventoryPage() {
                           onChange={(e) =>
                             setAdjustments((p) => ({ ...p, [item.productId]: e.target.value }))
                           }
+                          min={-item.stock}
                           className="w-20 text-right"
                           placeholder="+/-"
                         />
@@ -146,7 +146,7 @@ export default function AdminInventoryPage() {
                           variant="ghost"
                           size="sm"
                           onClick={() => handleAdjust(item.productId)}
-                          disabled={!adjustments[item.productId]}
+                          disabled={!adjustments[item.productId] || item.stock + parseInt(adjustments[item.productId] || "0") < 0}
                         >
                           Apply
                         </WsButton>
@@ -178,6 +178,7 @@ export default function AdminInventoryPage() {
                                 [`${item.productId}-${v.variantId}`]: e.target.value,
                               }))
                             }
+                            min={-v.stock}
                             className="w-20 text-right text-xs"
                             placeholder="+/-"
                           />
@@ -185,7 +186,7 @@ export default function AdminInventoryPage() {
                             variant="ghost"
                             size="sm"
                             onClick={() => handleAdjust(item.productId, v.variantId)}
-                            disabled={!adjustments[`${item.productId}-${v.variantId}`]}
+                            disabled={!adjustments[`${item.productId}-${v.variantId}`] || v.stock + parseInt(adjustments[`${item.productId}-${v.variantId}`] || "0") < 0}
                           >
                             Apply
                           </WsButton>

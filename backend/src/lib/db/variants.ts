@@ -100,20 +100,33 @@ export async function updateStock(
   variantId: string,
   quantityChange: number
 ): Promise<Variant | null> {
-  const result = await docClient.send(
-    new UpdateCommand({
-      TableName: Tables.VARIANTS,
-      Key: { productId, variantId },
-      UpdateExpression: "SET stock = stock + :change",
-      ConditionExpression: "stock + :change >= :zero",
-      ExpressionAttributeValues: {
-        ":change": quantityChange,
-        ":zero": 0,
-      },
-      ReturnValues: "ALL_NEW",
-    })
-  );
-  return (result.Attributes as Variant) || null;
+  try {
+    const values: Record<string, unknown> = { ":change": quantityChange };
+    let condition: string | undefined;
+
+    if (quantityChange < 0) {
+      condition = "stock >= :minRequired";
+      values[":minRequired"] = Math.abs(quantityChange);
+    }
+
+    const result = await docClient.send(
+      new UpdateCommand({
+        TableName: Tables.VARIANTS,
+        Key: { productId, variantId },
+        UpdateExpression: "SET stock = stock + :change",
+        ...(condition ? { ConditionExpression: condition } : {}),
+        ExpressionAttributeValues: values,
+        ReturnValues: "ALL_NEW",
+      })
+    );
+    return (result.Attributes as Variant) || null;
+  } catch (err: unknown) {
+    const name = (err as { name?: string })?.name;
+    if (name === "ConditionalCheckFailedException") {
+      return null;
+    }
+    throw err;
+  }
 }
 
 export async function deleteVariant(

@@ -29,7 +29,7 @@ export async function handler(
 
       const productStock = variants.length > 0
         ? variants.reduce((sum, v) => sum + v.stock, 0)
-        : 0;
+        : (product.stock ?? 0);
 
       const item = {
         productId: product.productId,

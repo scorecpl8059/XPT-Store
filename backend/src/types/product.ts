@@ -21,6 +21,7 @@ export interface Product {
   seoDescription?: string;
   averageRating: number;
   reviewCount: number;
+  stock: number;
   totalSold: number;
   createdAt: string;
   updatedAt: string;
@@ -52,6 +53,7 @@ export interface CreateProductInput {
   hasVariants?: boolean;
   variantTypes?: VariantType[];
   relatedProductIds?: string[];
+  stock?: number;
   seoTitle?: string;
   seoDescription?: string;
 }

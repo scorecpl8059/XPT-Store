@@ -39,6 +39,7 @@ export async function createProduct(
     seoDescription: input.seoDescription,
     averageRating: 0,
     reviewCount: 0,
+    stock: input.stock ?? 0,
     totalSold: 0,
     createdAt: now,
     updatedAt: now,
@@ -176,6 +177,53 @@ export async function updateProduct(
     })
   );
   return (result.Attributes as Product) || null;
+}
+
+export async function updateProductStock(
+  productId: string,
+  adjustment: number
+): Promise<Product | null> {
+  try {
+    if (adjustment < 0) {
+      // For decreases, ensure stock >= |adjustment|
+      const result = await docClient.send(
+        new UpdateCommand({
+          TableName: Tables.PRODUCTS,
+          Key: { productId },
+          UpdateExpression: "SET stock = stock + :change, updatedAt = :now",
+          ConditionExpression: "stock >= :minRequired",
+          ExpressionAttributeValues: {
+            ":change": adjustment,
+            ":minRequired": Math.abs(adjustment),
+            ":now": new Date().toISOString(),
+          },
+          ReturnValues: "ALL_NEW",
+        })
+      );
+      return (result.Attributes as Product) || null;
+    }
+
+    // For increases, no condition needed
+    const result = await docClient.send(
+      new UpdateCommand({
+        TableName: Tables.PRODUCTS,
+        Key: { productId },
+        UpdateExpression: "SET stock = stock + :change, updatedAt = :now",
+        ExpressionAttributeValues: {
+          ":change": adjustment,
+          ":now": new Date().toISOString(),
+        },
+        ReturnValues: "ALL_NEW",
+      })
+    );
+    return (result.Attributes as Product) || null;
+  } catch (err: unknown) {
+    const name = (err as { name?: string })?.name;
+    if (name === "ConditionalCheckFailedException") {
+      return null;
+    }
+    throw err;
+  }
 }
 
 export async function deleteProduct(productId: string): Promise<void> {

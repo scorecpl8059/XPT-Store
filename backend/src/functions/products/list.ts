@@ -2,12 +2,13 @@ import type { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { QueryCommand } from "@aws-sdk/lib-dynamodb";
 import { docClient } from "../../lib/db/client";
 import { Tables } from "../../lib/db/tables";
-import { success, serverError } from "../../lib/utils/response";
+import { success, serverError, initCors } from "../../lib/utils/response";
 
 export async function handler(
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> {
   try {
+    initCors(event);
     const params = event.queryStringParameters || {};
     const categoryId = params.categoryId;
     const status = params.status || "active";

@@ -3,12 +3,13 @@ import { requireAdmin, AuthError } from "../../lib/auth/middleware";
 import { deleteProduct, getProductById } from "../../lib/db/products";
 import { getVariantsByProduct, deleteVariant } from "../../lib/db/variants";
 import { createAuditLog } from "../../lib/db/audit-log";
-import { noContent, badRequest, notFound, unauthorized, forbidden, serverError } from "../../lib/utils/response";
+import { noContent, badRequest, notFound, unauthorized, forbidden, serverError, initCors } from "../../lib/utils/response";
 
 export async function handler(
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> {
   try {
+    initCors(event);
     const admin = requireAdmin(event);
 
     const productId = event.pathParameters?.id;

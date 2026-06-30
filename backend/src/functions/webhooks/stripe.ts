@@ -1,13 +1,14 @@
 import type { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { verifyWebhookSignature } from "../../lib/stripe/webhooks";
 import { updateOrder } from "../../lib/db/orders";
-import { success, badRequest, serverError } from "../../lib/utils/response";
+import { success, badRequest, serverError, initCors } from "../../lib/utils/response";
 import type Stripe from "stripe";
 
 export async function handler(
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> {
   try {
+    initCors(event);
     let stripeEvent: Stripe.Event;
 
     try {

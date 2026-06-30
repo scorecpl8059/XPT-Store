@@ -1,6 +1,6 @@
 import type { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { getUserByEmail } from "../../lib/db/users";
-import { success, badRequest, serverError } from "../../lib/utils/response";
+import { success, badRequest, serverError, initCors } from "../../lib/utils/response";
 import { z } from "zod";
 
 const forgotPasswordSchema = z.object({
@@ -11,6 +11,7 @@ export async function handler(
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> {
   try {
+    initCors(event);
     const body = JSON.parse(event.body || "{}");
     const parsed = forgotPasswordSchema.safeParse(body);
 

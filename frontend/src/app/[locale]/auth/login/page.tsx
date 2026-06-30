@@ -42,12 +42,17 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center px-4 bg-ws-dark">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <Link href="/">
+          <Link href="/" className="inline-flex items-center gap-2">
+            <img
+              src="https://xpt-tech-assets.s3.us-east-1.amazonaws.com/xpt-logo.png"
+              alt="XPT-TECH"
+              className="h-8 w-auto"
+            />
             <span className="text-2xl font-bold text-ws-brand">XPT-TECH</span>
           </Link>
-          <p className="mt-2 text-sm text-ws-text-secondary">
+          <h1 className="mt-3 text-xl font-semibold text-ws-text">
             {t("signIn")}
-          </p>
+          </h1>
         </div>
 
         <WsCard>
@@ -114,6 +119,12 @@ export default function LoginPage() {
             </p>
           </WsCardFooter>
         </WsCard>
+
+        <div className="mt-6 text-center">
+          <Link href="/" className="inline-flex items-center gap-1 text-sm text-ws-text-secondary hover:text-ws-blue transition-colors">
+            <span>←</span> {t("backToStore")}
+          </Link>
+        </div>
       </div>
     </div>
   );

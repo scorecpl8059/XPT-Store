@@ -3,12 +3,13 @@ import { requireAdmin, AuthError } from "../../lib/auth/middleware";
 import { createCategory } from "../../lib/db/categories";
 import { createAuditLog } from "../../lib/db/audit-log";
 import { createCategorySchema } from "../../lib/utils/validation";
-import { created, badRequest, unauthorized, forbidden, serverError } from "../../lib/utils/response";
+import { created, badRequest, unauthorized, forbidden, serverError, initCors } from "../../lib/utils/response";
 
 export async function handler(
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> {
   try {
+    initCors(event);
     const admin = requireAdmin(event);
 
     const body = JSON.parse(event.body || "{}");

@@ -3,12 +3,13 @@ import { requireAuth, AuthError } from "../../lib/auth/middleware";
 import { getUserById } from "../../lib/db/users";
 import { getProductById } from "../../lib/db/products";
 import { createRfq } from "../../lib/db/rfq";
-import { created, badRequest, unauthorized, serverError } from "../../lib/utils/response";
+import { created, badRequest, unauthorized, serverError, initCors } from "../../lib/utils/response";
 
 export async function handler(
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> {
   try {
+    initCors(event);
     const authUser = requireAuth(event);
 
     if (!event.body) {

@@ -2,7 +2,11 @@ import type { APIGatewayProxyEvent } from "aws-lambda";
 import { stripe } from "./client";
 import type Stripe from "stripe";
 
-const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET || "";
+function getWebhookSecret(): string {
+  const secret = process.env.STRIPE_WEBHOOK_SECRET;
+  if (!secret) throw new Error("STRIPE_WEBHOOK_SECRET environment variable is required");
+  return secret;
+}
 
 /**
  * Verify that a webhook event is genuinely from Stripe.
@@ -17,14 +21,10 @@ export function verifyWebhookSignature(
     throw new Error("Missing Stripe-Signature header");
   }
 
-  if (!WEBHOOK_SECRET) {
-    throw new Error("STRIPE_WEBHOOK_SECRET not configured");
-  }
-
   // event.body is the raw body string from API Gateway
   return stripe.webhooks.constructEvent(
     event.body || "",
     signature,
-    WEBHOOK_SECRET
+    getWebhookSecret()
   );
 }

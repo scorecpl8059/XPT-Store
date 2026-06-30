@@ -53,7 +53,7 @@ export default function HomePage() {
           })
           .catch(() => ({ items: [] })),
       ]);
-      setCategories(catData.categories.filter((c) => c.status === "active"));
+      setCategories(catData.categories.filter((c) => c.status === "active" && !c.parentId));
       setNewArrivals(prodData.items);
     } catch {
       // Fallback: render without data

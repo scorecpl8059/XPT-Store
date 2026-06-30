@@ -1,7 +1,7 @@
 import type { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { requireAdmin, AuthError } from "../../lib/auth/middleware";
 import { updateVariant } from "../../lib/db/variants";
-import { success, badRequest, notFound, unauthorized, forbidden, serverError } from "../../lib/utils/response";
+import { success, badRequest, notFound, unauthorized, forbidden, serverError, initCors } from "../../lib/utils/response";
 import { z } from "zod";
 
 const updateVariantSchema = z.object({
@@ -18,6 +18,7 @@ export async function handler(
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> {
   try {
+    initCors(event);
     requireAdmin(event);
 
     const productId = event.pathParameters?.id;

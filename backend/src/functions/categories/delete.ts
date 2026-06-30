@@ -2,12 +2,13 @@ import type { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { requireAdmin, AuthError } from "../../lib/auth/middleware";
 import { deleteCategory, getCategoryById, listChildCategories } from "../../lib/db/categories";
 import { createAuditLog } from "../../lib/db/audit-log";
-import { noContent, badRequest, notFound, unauthorized, forbidden, serverError } from "../../lib/utils/response";
+import { noContent, badRequest, notFound, unauthorized, forbidden, serverError, initCors } from "../../lib/utils/response";
 
 export async function handler(
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> {
   try {
+    initCors(event);
     const admin = requireAdmin(event);
 
     const categoryId = event.pathParameters?.id;

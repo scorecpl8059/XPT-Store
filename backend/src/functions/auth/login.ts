@@ -12,8 +12,7 @@ import {
   success,
   badRequest,
   unauthorized,
-  serverError,
-} from "../../lib/utils/response";
+  serverError, initCors } from "../../lib/utils/response";
 import { z } from "zod";
 
 const loginSchema = z.object({
@@ -26,6 +25,7 @@ export async function handler(
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> {
   try {
+    initCors(event);
     const body = JSON.parse(event.body || "{}");
     const parsed = loginSchema.safeParse(body);
 

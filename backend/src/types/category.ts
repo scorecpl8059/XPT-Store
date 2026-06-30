@@ -4,8 +4,6 @@ export interface Category {
   slug: string;
   description?: string;
   parentId?: string;
-  image?: string;
-  sortOrder: number;
   status: "active" | "inactive";
   productCount: number;
   createdAt: string;
@@ -17,7 +15,5 @@ export interface CreateCategoryInput {
   slug?: string;
   description?: string;
   parentId?: string;
-  image?: string;
-  sortOrder?: number;
   status?: "active" | "inactive";
 }

@@ -1,12 +1,13 @@
 import type { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { getAuthUser } from "../../lib/auth/middleware";
 import { listPagesByType } from "../../lib/db/pages";
-import { success, badRequest, serverError } from "../../lib/utils/response";
+import { success, badRequest, serverError, initCors } from "../../lib/utils/response";
 
 export async function handler(
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> {
   try {
+    initCors(event);
     const user = getAuthUser(event);
     const isAdmin = user?.role === "admin";
 

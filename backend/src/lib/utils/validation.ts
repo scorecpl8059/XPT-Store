@@ -94,8 +94,6 @@ export const createCategorySchema = z.object({
   slug: z.string().max(100).optional(),
   description: z.string().max(500).optional(),
   parentId: z.string().optional(),
-  image: z.string().url().optional(),
-  sortOrder: z.number().int().optional(),
   status: z.enum(["active", "inactive"]).optional(),
 });
 

@@ -1,12 +1,13 @@
 import type { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { requireAuth, AuthError } from "../../lib/auth/middleware";
 import { deleteAddress } from "../../lib/db/addresses";
-import { noContent, badRequest, unauthorized, serverError } from "../../lib/utils/response";
+import { noContent, badRequest, unauthorized, serverError, initCors } from "../../lib/utils/response";
 
 export async function handler(
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> {
   try {
+    initCors(event);
     const user = requireAuth(event);
 
     const addressId = event.pathParameters?.addressId;

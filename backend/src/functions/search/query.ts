@@ -2,12 +2,13 @@ import type { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { searchProducts } from "../../lib/aws/opensearch";
 import { logSearch } from "../../lib/db/search-logs";
 import { getAuthUser } from "../../lib/auth/middleware";
-import { success, badRequest, serverError } from "../../lib/utils/response";
+import { success, badRequest, serverError, initCors } from "../../lib/utils/response";
 
 export async function handler(
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> {
   try {
+    initCors(event);
     const q = event.queryStringParameters?.q?.trim();
     if (!q) {
       return badRequest("Search query is required");

@@ -68,7 +68,6 @@ function makeCat(overrides: Partial<Category> = {}): Category {
     name: "Sensors",
     slug: "sensors",
     description: "All types of sensors",
-    sortOrder: 0,
     status: "active",
     productCount: 10,
     createdAt: "2026-01-01T00:00:00.000Z",

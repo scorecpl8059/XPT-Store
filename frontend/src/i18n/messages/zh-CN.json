@@ -115,6 +115,7 @@
   "auth": {
     "signIn": "登录",
     "signUp": "创建账户",
+    "backToStore": "返回商店",
     "email": "邮箱",
     "password": "密码",
     "confirmPassword": "确认密码",

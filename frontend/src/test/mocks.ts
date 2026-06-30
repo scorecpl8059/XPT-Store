@@ -82,7 +82,6 @@ export function makeCategory(overrides: Partial<Category> = {}): Category {
     name: "Microcontrollers",
     slug: "microcontrollers",
     description: "MCU boards and kits",
-    sortOrder: 0,
     status: "active",
     productCount: 15,
     createdAt: "2026-01-01T00:00:00.000Z",

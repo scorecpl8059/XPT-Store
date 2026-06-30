@@ -28,8 +28,6 @@ export async function createCategory(
     slug: input.slug || generateSlug(input.name),
     description: input.description,
     parentId: input.parentId,
-    image: input.image,
-    sortOrder: input.sortOrder || 0,
     status: input.status || "active",
     productCount: 0,
     createdAt: now,

@@ -4,7 +4,7 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "export",
+  ...(process.env.NODE_ENV === "production" ? { output: "export" } : {}),
   trailingSlash: true,
 };
 

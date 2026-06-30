@@ -2,7 +2,7 @@ import type { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { getProductById } from "../../lib/db/products";
 import { getVariantsByProduct } from "../../lib/db/variants";
 import { calculateShippingRate } from "../../lib/db/shipping";
-import { success, badRequest, serverError } from "../../lib/utils/response";
+import { success, badRequest, serverError, initCors } from "../../lib/utils/response";
 
 interface CalculateShippingInput {
   state: string;
@@ -13,6 +13,7 @@ export async function handler(
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> {
   try {
+    initCors(event);
     if (!event.body) {
       return badRequest("Request body is required");
     }

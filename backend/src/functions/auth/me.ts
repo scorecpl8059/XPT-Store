@@ -1,12 +1,13 @@
 import type { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { getUserById } from "../../lib/db/users";
 import { requireAuth, AuthError } from "../../lib/auth/middleware";
-import { success, unauthorized, notFound, serverError } from "../../lib/utils/response";
+import { success, unauthorized, notFound, serverError, initCors } from "../../lib/utils/response";
 
 export async function handler(
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> {
   try {
+    initCors(event);
     const authUser = requireAuth(event);
 
     const user = await getUserById(authUser.userId);

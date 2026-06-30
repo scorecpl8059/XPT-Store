@@ -1,12 +1,13 @@
 import type { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { requireAuth, AuthError } from "../../lib/auth/middleware";
 import { getOrderById } from "../../lib/db/orders";
-import { success, badRequest, notFound, unauthorized, forbidden, serverError } from "../../lib/utils/response";
+import { success, badRequest, notFound, unauthorized, forbidden, serverError, initCors } from "../../lib/utils/response";
 
 export async function handler(
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> {
   try {
+    initCors(event);
     const user = requireAuth(event);
 
     const orderId = event.pathParameters?.orderId;

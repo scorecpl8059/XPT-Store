@@ -51,7 +51,6 @@ function makeCat(overrides: Partial<Category> = {}): Category {
     categoryId: "cat-1",
     name: "Sensors",
     slug: "sensors",
-    sortOrder: 0,
     status: "active",
     productCount: 10,
     createdAt: "2026-01-01T00:00:00.000Z",

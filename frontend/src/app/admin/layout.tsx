@@ -44,7 +44,20 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const { user, logout } = useAuth();
+  const { user, loading, logout } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-ws-dark">
+        <p className="text-sm text-ws-text-muted">Loading...</p>
+      </div>
+    );
+  }
+
+  if (!user || user.role !== "admin") {
+    window.location.href = "/en/auth/login/";
+    return null;
+  }
 
   return (
     <div className="flex min-h-screen bg-ws-dark">

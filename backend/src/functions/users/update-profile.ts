@@ -1,7 +1,7 @@
 import type { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { requireAuth, AuthError } from "../../lib/auth/middleware";
 import { updateUser } from "../../lib/db/users";
-import { success, badRequest, unauthorized, serverError } from "../../lib/utils/response";
+import { success, badRequest, unauthorized, serverError, initCors } from "../../lib/utils/response";
 
 const ALLOWED_FIELDS = ["name", "phone", "companyName", "taxId", "preferredLanguage"] as const;
 
@@ -9,6 +9,7 @@ export async function handler(
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> {
   try {
+    initCors(event);
     const user = requireAuth(event);
 
     const body = JSON.parse(event.body || "{}");

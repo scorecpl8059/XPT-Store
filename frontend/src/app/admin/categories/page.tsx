@@ -38,9 +38,9 @@ function buildTree(categories: Category[]): CategoryNode[] {
     }
   }
 
-  // Sort each level by sortOrder
+  // Sort each level alphabetically by name
   const sortChildren = (nodes: CategoryNode[]) => {
-    nodes.sort((a, b) => a.sortOrder - b.sortOrder);
+    nodes.sort((a, b) => a.name.localeCompare(b.name));
     nodes.forEach((n) => sortChildren(n.children));
   };
   sortChildren(roots);
@@ -112,7 +112,7 @@ export default function AdminCategoriesPage() {
     if (editingCategory) {
       await api.put(`/categories/${editingCategory.categoryId}`, input);
     } else {
-      await api.post("/categories", { ...input, parentId });
+      await api.post("/categories", input);
     }
     await fetchCategories();
     setModalOpen(false);

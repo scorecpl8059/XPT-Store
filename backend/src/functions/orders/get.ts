@@ -6,13 +6,13 @@ import {
   badRequest,
   unauthorized,
   notFound,
-  serverError,
-} from "../../lib/utils/response";
+  serverError, initCors } from "../../lib/utils/response";
 
 export async function handler(
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> {
   try {
+    initCors(event);
     const user = requireAuth(event);
 
     const orderId = event.pathParameters?.id;

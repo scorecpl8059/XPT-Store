@@ -2,7 +2,7 @@ import type { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { requireAuth } from "../../lib/auth/middleware";
 import { AuthError } from "../../lib/auth/middleware";
 import { generatePresignedUploadUrl } from "../../lib/aws/s3";
-import { success, badRequest, unauthorized, forbidden, serverError } from "../../lib/utils/response";
+import { success, badRequest, unauthorized, forbidden, serverError, initCors } from "../../lib/utils/response";
 import { z } from "zod";
 
 const presignSchema = z.object({
@@ -16,6 +16,7 @@ export async function handler(
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> {
   try {
+    initCors(event);
     const user = requireAuth(event);
 
     const body = JSON.parse(event.body || "{}");

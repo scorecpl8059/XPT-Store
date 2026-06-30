@@ -6,13 +6,13 @@ import {
   badRequest,
   notFound,
   unauthorized,
-  serverError,
-} from "../../lib/utils/response";
+  serverError, initCors } from "../../lib/utils/response";
 
 export async function handler(
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> {
   try {
+    initCors(event);
     requireAdmin(event);
 
     const id = event.pathParameters?.id;

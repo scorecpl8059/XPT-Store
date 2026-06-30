@@ -115,6 +115,7 @@
   "auth": {
     "signIn": "Sign In",
     "signUp": "Create Account",
+    "backToStore": "Back to store",
     "email": "Email",
     "password": "Password",
     "confirmPassword": "Confirm Password",

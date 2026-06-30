@@ -246,7 +246,6 @@ describe("createCategorySchema", () => {
       slug: "sensors",
       description: "Temperature, humidity, motion sensors",
       parentId: "cat-parent",
-      sortOrder: 2,
       status: "active",
     });
     expect(result.success).toBe(true);

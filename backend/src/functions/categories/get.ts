@@ -1,11 +1,12 @@
 import type { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { getCategoryById, getCategoryBySlug } from "../../lib/db/categories";
-import { success, notFound, badRequest, serverError } from "../../lib/utils/response";
+import { success, notFound, badRequest, serverError, initCors } from "../../lib/utils/response";
 
 export async function handler(
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> {
   try {
+    initCors(event);
     const id = event.pathParameters?.id;
     if (!id) return badRequest("Category ID is required");
 

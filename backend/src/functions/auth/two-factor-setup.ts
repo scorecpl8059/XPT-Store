@@ -2,7 +2,7 @@ import type { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { getUserById, updateUser } from "../../lib/db/users";
 import { requireAuth, AuthError } from "../../lib/auth/middleware";
 import { generateTotpSecret, verifyTotpCode } from "../../lib/auth/two-factor";
-import { success, badRequest, unauthorized, forbidden, serverError } from "../../lib/utils/response";
+import { success, badRequest, unauthorized, forbidden, serverError, initCors } from "../../lib/utils/response";
 import { z } from "zod";
 
 const verifySchema = z.object({
@@ -13,6 +13,7 @@ export async function handler(
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> {
   try {
+    initCors(event);
     const authUser = requireAuth(event);
 
     // Only admin users can set up 2FA

@@ -30,8 +30,6 @@ export function CategoryFormModal({
     slug: category?.slug || "",
     description: category?.description || "",
     parentId: category?.parentId || parentId,
-    image: category?.image || "",
-    sortOrder: category?.sortOrder ?? 0,
     status: category?.status || "active",
   });
 
@@ -57,7 +55,6 @@ export function CategoryFormModal({
         ...form,
         slug: form.slug || undefined,
         description: form.description || undefined,
-        image: form.image || undefined,
         parentId: form.parentId || undefined,
       });
     } catch (err) {
@@ -167,45 +164,22 @@ export function CategoryFormModal({
               </select>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <WsLabel htmlFor="cat-order">Sort Order</WsLabel>
-                <WsInput
-                  id="cat-order"
-                  type="number"
-                  value={form.sortOrder ?? 0}
-                  onChange={(e) =>
-                    updateField("sortOrder", parseInt(e.target.value) || 0)
-                  }
-                />
-              </div>
-              <div className="space-y-1.5">
-                <WsLabel htmlFor="cat-status">Status</WsLabel>
-                <select
-                  id="cat-status"
-                  value={form.status || "active"}
-                  onChange={(e) =>
-                    updateField(
-                      "status",
-                      e.target.value as "active" | "inactive"
-                    )
-                  }
-                  className="w-full h-9 px-3 text-sm rounded-md bg-ws-surface border border-ws-border text-ws-text focus:outline-none focus:border-ws-blue focus:ring-1 focus:ring-ws-blue/30"
-                >
-                  <option value="active">Active</option>
-                  <option value="inactive">Inactive</option>
-                </select>
-              </div>
-            </div>
-
             <div className="space-y-1.5">
-              <WsLabel htmlFor="cat-image">Image URL</WsLabel>
-              <WsInput
-                id="cat-image"
-                value={form.image || ""}
-                onChange={(e) => updateField("image", e.target.value)}
-                placeholder="https://..."
-              />
+              <WsLabel htmlFor="cat-status">Status</WsLabel>
+              <select
+                id="cat-status"
+                value={form.status || "active"}
+                onChange={(e) =>
+                  updateField(
+                    "status",
+                    e.target.value as "active" | "inactive"
+                  )
+                }
+                className="w-full h-9 px-3 text-sm rounded-md bg-ws-surface border border-ws-border text-ws-text focus:outline-none focus:border-ws-blue focus:ring-1 focus:ring-ws-blue/30"
+              >
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </select>
             </div>
           </div>
 

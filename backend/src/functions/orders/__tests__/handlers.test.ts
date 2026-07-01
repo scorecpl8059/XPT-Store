@@ -122,7 +122,7 @@ describe("Create Order Handler", () => {
     vi.mocked(createOrder).mockResolvedValue({
       orderId: "ord-1",
       userId: "user-1",
-      status: "pending",
+      status: "processing",
       items: [{ productId: "p1", name: "Widget", price: 25.0, quantity: 2 }],
       subtotal: 50.0,
       shippingCost: 5.99,
@@ -311,7 +311,7 @@ describe("Get Order Handler", () => {
     vi.mocked(getOrderById).mockResolvedValue({
       orderId: "ord-1",
       userId: "user-1",
-      status: "pending",
+      status: "processing",
       total: 59.99,
     } as any);
 
@@ -329,7 +329,7 @@ describe("Get Order Handler", () => {
     vi.mocked(getOrderById).mockResolvedValue({
       orderId: "ord-1",
       userId: "user-1",
-      status: "pending",
+      status: "processing",
     } as any);
 
     const result = await getHandler(
@@ -347,7 +347,7 @@ describe("Get Order Handler", () => {
     vi.mocked(getOrderById).mockResolvedValue({
       orderId: "ord-1",
       userId: "user-1",
-      status: "pending",
+      status: "processing",
     } as any);
 
     const result = await getHandler(
@@ -404,7 +404,7 @@ describe("List Orders Handler", () => {
     vi.mocked(requireAuth).mockReturnValue(mockUser);
     vi.mocked(listOrdersByUser).mockResolvedValue({
       items: [
-        { orderId: "ord-1", userId: "user-1", status: "pending" },
+        { orderId: "ord-1", userId: "user-1", status: "processing" },
         { orderId: "ord-2", userId: "user-1", status: "processing" },
       ],
     } as any);

@@ -65,7 +65,7 @@ describe("List Orders Handler", () => {
     vi.mocked(requireAuth).mockReturnValue(mockUser);
     vi.mocked(listOrdersByUser).mockResolvedValue([
       { orderId: "o1", status: "delivered", total: 100 },
-      { orderId: "o2", status: "pending", total: 50 },
+      { orderId: "o2", status: "processing", total: 50 },
     ] as any);
 
     const result = await listOrdersHandler(makeEvent());

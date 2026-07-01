@@ -157,7 +157,7 @@ export async function handler(
     // Create the order
     const order = await createOrder({
       userId: user.userId,
-      status: "pending",
+      status: "processing",
       items: resolvedItems,
       subtotal,
       shippingCost,

@@ -12,14 +12,7 @@ export interface Order {
   orderId: string;
   orderNumber: string; // e.g., XPT-20260620-0001
   userId: string;
-  status:
-    | "pending"
-    | "processing"
-    | "shipped"
-    | "delivered"
-    | "completed"
-    | "cancelled"
-    | "refunded";
+  status: "processing" | "shipped" | "delivered" | "refunded";
   items: OrderItem[];
   subtotal: number;
   shippingCost: number;

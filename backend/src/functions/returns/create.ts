@@ -45,8 +45,17 @@ export async function handler(
       return forbidden("Order does not belong to you");
     }
 
-    if (order.status !== "delivered" && order.status !== "completed") {
-      return badRequest("Order must be delivered or completed to request a return");
+    if (order.status !== "delivered") {
+      return badRequest("Order must be delivered to request a return");
+    }
+
+    // Enforce 30-day return window from delivery date
+    const deliveredAt = order.deliveredAt || order.updatedAt;
+    const daysSinceDelivery = Math.floor(
+      (Date.now() - new Date(deliveredAt).getTime()) / (1000 * 60 * 60 * 24)
+    );
+    if (daysSinceDelivery > 30) {
+      return badRequest("Return window has expired (30 days from delivery)");
     }
 
     const returnItems: ReturnItem[] = input.items.map(

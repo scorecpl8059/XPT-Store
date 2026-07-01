@@ -33,10 +33,15 @@ export default function NewReturnPage() {
     async function fetchOrders() {
       try {
         const res = await api.get<{ orders: Order[] }>("/users/me/orders");
-        // Only show delivered/completed orders
-        const eligible = (res.orders ?? []).filter(
-          (o) => o.status === "delivered" || o.status === "completed"
-        );
+        // Only show delivered orders within 30-day return window
+        const eligible = (res.orders ?? []).filter((o) => {
+          if (o.status !== "delivered") return false;
+          const deliveredAt = o.deliveredAt || o.updatedAt;
+          const daysSince = Math.floor(
+            (Date.now() - new Date(deliveredAt).getTime()) / (1000 * 60 * 60 * 24)
+          );
+          return daysSince <= 30;
+        });
         setOrders(eligible);
       } catch {
         // silently fail
@@ -119,7 +124,7 @@ export default function NewReturnPage() {
         <WsCardContent>
           {orders.length === 0 ? (
             <p className="text-sm text-ws-text-muted">
-              No eligible orders. Returns are available for delivered or completed orders.
+              No eligible orders. Returns are available within 30 days of delivery.
             </p>
           ) : (
             <select

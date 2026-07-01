@@ -50,7 +50,7 @@ vi.mock("@/components/ui/cyber-button", () => ({
 const mockOrder = {
   orderId: "ord-1",
   orderNumber: "XPT-20260620-0001",
-  status: "pending",
+  status: "processing",
   total: 59.99,
   createdAt: "2026-06-20T00:00:00Z",
   items: [{ productId: "p1", name: "Arduino", sku: "ARD-001", price: 29.99, quantity: 2 }],
@@ -111,7 +111,7 @@ describe("AccountDashboardPage", () => {
     render(<AccountDashboardPage />);
     await waitFor(() => {
       expect(screen.getByText(/XPT-20260620-0001/)).toBeInTheDocument();
-      expect(screen.getByText("pending")).toBeInTheDocument();
+      expect(screen.getByText("processing")).toBeInTheDocument();
       expect(screen.getByText("$59.99")).toBeInTheDocument();
     });
   });

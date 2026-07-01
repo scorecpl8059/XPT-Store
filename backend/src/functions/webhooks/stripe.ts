@@ -43,9 +43,9 @@ export async function handler(
         const orderId = paymentIntent.metadata?.orderId;
 
         if (orderId) {
-          await updateOrder(orderId, { status: "cancelled" });
+          await updateOrder(orderId, { status: "refunded" });
           console.log(
-            `Order ${orderId} updated to cancelled (payment failed)`
+            `Order ${orderId} updated to refunded (payment failed)`
           );
         } else {
           console.warn(

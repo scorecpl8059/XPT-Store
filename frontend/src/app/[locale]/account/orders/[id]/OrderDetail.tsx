@@ -17,12 +17,9 @@ import type { Order } from "@/types/order";
 import { ArrowLeft, Package, Truck } from "lucide-react";
 
 const statusColorMap: Record<string, string> = {
-  pending: "amber",
   processing: "blue",
   shipped: "purple",
   delivered: "green",
-  completed: "green",
-  cancelled: "red",
   refunded: "muted",
 };
 

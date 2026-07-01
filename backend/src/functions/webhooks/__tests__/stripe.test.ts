@@ -76,7 +76,7 @@ describe("Stripe Webhook Handler", () => {
 
     expect(result.statusCode).toBe(200);
     expect(updateOrder).toHaveBeenCalledWith("ord-2", {
-      status: "cancelled",
+      status: "refunded",
     });
   });
 

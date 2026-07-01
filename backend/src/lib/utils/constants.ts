@@ -1,10 +1,7 @@
 export const OrderStatus = {
-  PENDING: "pending",
   PROCESSING: "processing",
   SHIPPED: "shipped",
   DELIVERED: "delivered",
-  COMPLETED: "completed",
-  CANCELLED: "cancelled",
   REFUNDED: "refunded",
 } as const;
 
@@ -43,5 +40,5 @@ export const RfqStatus = {
   CLOSED: "closed",
 } as const;
 
-export const RETURN_WINDOW_DAYS = 7;
+export const RETURN_WINDOW_DAYS = 30;
 export const LOW_STOCK_THRESHOLD = 5;

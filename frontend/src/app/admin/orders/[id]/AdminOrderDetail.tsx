@@ -16,22 +16,16 @@ import type { Order } from "@/types/order";
 import { ArrowLeft, Package, Truck, Save } from "lucide-react";
 
 const statusColorMap: Record<string, string> = {
-  pending: "amber",
   processing: "blue",
   shipped: "purple",
   delivered: "green",
-  completed: "green",
-  cancelled: "red",
   refunded: "muted",
 };
 
 const statusOptions = [
-  "pending",
   "processing",
   "shipped",
   "delivered",
-  "completed",
-  "cancelled",
 ] as const;
 
 export default function AdminOrderDetailPage() {

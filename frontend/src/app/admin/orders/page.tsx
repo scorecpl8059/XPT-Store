@@ -13,22 +13,16 @@ import { Package, Download } from "lucide-react";
 
 const statuses = [
   "all",
-  "pending",
   "processing",
   "shipped",
   "delivered",
-  "completed",
-  "cancelled",
   "refunded",
 ] as const;
 
 const statusColorMap: Record<string, string> = {
-  pending: "amber",
   processing: "blue",
   shipped: "purple",
   delivered: "green",
-  completed: "green",
-  cancelled: "red",
   refunded: "muted",
 };
 

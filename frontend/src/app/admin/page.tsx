@@ -20,12 +20,9 @@ import {
 } from "lucide-react";
 
 const statusColorMap: Record<string, string> = {
-  pending: "amber",
   processing: "blue",
   shipped: "purple",
   delivered: "green",
-  completed: "green",
-  cancelled: "red",
   refunded: "muted",
 };
 
@@ -34,7 +31,7 @@ export default function AdminDashboardPage() {
   const [stats, setStats] = useState({
     totalOrders: 0,
     revenue: 0,
-    pendingOrders: 0,
+    processingOrders: 0,
     lowStock: 0,
   });
   const [loading, setLoading] = useState(true);
@@ -44,7 +41,7 @@ export default function AdminDashboardPage() {
       try {
         const [ordersRes, pendingRes, inventoryRes] = await Promise.allSettled([
           api.get<{ orders: Order[] }>("/orders/admin", { limit: "10" }),
-          api.get<{ orders: Order[] }>("/orders/admin", { status: "pending" }),
+          api.get<{ orders: Order[] }>("/orders/admin", { status: "processing" }),
           api.get<{ inventory: { lowStock: boolean }[] }>("/inventory", { lowStock: "true" }),
         ]);
 
@@ -57,7 +54,7 @@ export default function AdminDashboardPage() {
         if (pendingRes.status === "fulfilled") {
           setStats((prev) => ({
             ...prev,
-            pendingOrders: pendingRes.value.orders?.length ?? 0,
+            processingOrders: pendingRes.value.orders?.length ?? 0,
           }));
         }
         if (inventoryRes.status === "fulfilled") {
@@ -115,8 +112,8 @@ export default function AdminDashboardPage() {
               <Package className="h-5 w-5 text-amber-600" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-ws-text">{stats.pendingOrders}</p>
-              <p className="text-xs text-ws-text-muted">Pending Orders</p>
+              <p className="text-2xl font-bold text-ws-text">{stats.processingOrders}</p>
+              <p className="text-xs text-ws-text-muted">Processing Orders</p>
             </div>
           </WsCardContent>
         </WsCard>

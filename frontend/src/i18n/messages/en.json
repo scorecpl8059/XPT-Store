@@ -178,12 +178,9 @@
     "total": "Total",
     "items": "Items",
     "tracking": "Tracking",
-    "pending": "Pending",
     "processing": "Processing",
     "shipped": "Shipped",
     "delivered": "Delivered",
-    "completed": "Completed",
-    "cancelled": "Cancelled",
     "refunded": "Refunded"
   },
   "rfq": {

@@ -23,7 +23,7 @@ export async function generateOrderNumber(): Promise<string> {
         "#status = :status AND begins_with(createdAt, :today)",
       ExpressionAttributeNames: { "#status": "status" },
       ExpressionAttributeValues: {
-        ":status": "pending",
+        ":status": "processing",
         ":today": date.toISOString().slice(0, 10),
       },
       Select: "COUNT",

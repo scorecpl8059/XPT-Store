@@ -26,6 +26,7 @@ const statusOptions = [
   "processing",
   "shipped",
   "delivered",
+  "refunded",
 ] as const;
 
 export default function AdminOrderDetailPage() {

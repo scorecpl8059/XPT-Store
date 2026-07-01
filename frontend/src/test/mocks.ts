@@ -66,6 +66,7 @@ export function makeProduct(overrides: Partial<Product> = {}): Product {
     images: ["https://cdn.example.com/arduino.jpg"],
     status: "active",
     hasVariants: false,
+    stock: 50,
     relatedProductIds: [],
     averageRating: 4.5,
     reviewCount: 12,

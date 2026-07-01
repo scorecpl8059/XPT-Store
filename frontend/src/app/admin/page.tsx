@@ -40,8 +40,8 @@ export default function AdminDashboardPage() {
     async function fetchData() {
       try {
         const [ordersRes, pendingRes, inventoryRes] = await Promise.allSettled([
-          api.get<{ orders: Order[] }>("/orders/admin", { limit: "10" }),
-          api.get<{ orders: Order[] }>("/orders/admin", { status: "processing" }),
+          api.get<{ orders: Order[] }>("/admin/orders", { limit: "10" }),
+          api.get<{ orders: Order[] }>("/admin/orders", { status: "processing" }),
           api.get<{ inventory: { lowStock: boolean }[] }>("/inventory", { lowStock: "true" }),
         ]);
 

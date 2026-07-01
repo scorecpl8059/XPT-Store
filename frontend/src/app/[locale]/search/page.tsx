@@ -181,6 +181,7 @@ export default function SearchPage() {
                           weight: 0,
                           hasVariants: false,
                           relatedProductIds: [],
+                          stock: 0,
                           averageRating: 0,
                           reviewCount: 0,
                           totalSold: 0,
